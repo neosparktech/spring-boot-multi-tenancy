@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @DataJpaTest()
 @ActiveProfiles("test")
 @Import(TenantIdentifierResolver.class)
-
 @Slf4j
 class UserRepoTest {
 
