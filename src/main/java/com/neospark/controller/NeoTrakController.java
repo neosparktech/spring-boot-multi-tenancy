@@ -34,7 +34,11 @@ public class NeoTrakController {
 
 	@PutMapping("/update-user/{userId}")
 	public ResponseEntity<String> updateUser(@PathVariable UUID userId, @RequestBody UserVO userVO) {
-		neosparkService.updateUser(userId, userVO);
+		int count = neosparkService.updateUser(userId, userVO);
+		if(count == 0) {
+			return new ResponseEntity<String>("Updated Failed as no records found", HttpStatus.NOT_FOUND);
+
+		}
 		return new ResponseEntity<String>("Updated successfully", HttpStatus.ACCEPTED);
 	}
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.neospark.config.TenantContext;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,7 +26,9 @@ public class MyFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		log.info("Request URL: {} ", httpRequest.getRequestURI());
 		String tenantId = httpRequest.getHeader("x-tenant-id");
-
+		if(StringUtils.isBlank(tenantId)) {
+			throw new IllegalArgumentException("TenantId is mandatory");
+		}
 		TenantContext.set(TenantContext.builder().tenantId(tenantId).build());
 		chain.doFilter(request, response); // Continue the filter chain
 		log.info("Tenant Cleared {}", TenantContext.get().getTenantId());

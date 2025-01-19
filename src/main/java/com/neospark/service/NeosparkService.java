@@ -34,16 +34,10 @@ public class NeosparkService {
 		return userRepo.save(User.builder().firstName(userVO.getFirstName()).lastName(userVO.getLastName()).build());
 	}
 
-//	public void updateUser(UUID id, UserVO userVO) {
-//		User user = userRepo.getReferenceById(id);
-//		user.setFirstName(userVO.getFirstName());
-//		user.setLastName(userVO.getLastName());
-//		userRepo.save(user);
-//	}
 
 	@Transactional
-	public void updateUser(UUID id, UserVO userVO) {
-		userRepo.updateUser(id, userVO.getFirstName(), userVO.getLastName());
+	public int updateUser(UUID id, UserVO userVO) {
+		return userRepo.updateUser(id, userVO.getFirstName(), userVO.getLastName());
 	}
 
 }
